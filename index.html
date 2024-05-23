@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>IP 查询工具</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"] {
+            padding: 8px;
+            width: 60%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-right: 10px;
+        }
+        button[type="submit"] {
+            padding: 8px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+    </style>
+    <script src="https://cdn.staticfile.net/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#queryForm').on('submit', function(event) {
+                event.preventDefault(); // 阻止表单的默认提交行为
+
+                var input = $('#input').val();
+                
+                $.ajax({
+                    url: 'query.php',
+                    method: 'GET',
+                    data: { input: input },
+                    success: function(response) {
+                        $('#result').html(response);
+                    },
+                    error: function() {
+                        $('#result').html('查询失败，请重试。');
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>IP 查询工具</h1>
+        <form id="queryForm">
+            <label for="input">请输入 IP 地址或域名:</label>
+            <input type="text" id="input" name="input" required>
+            <button type="submit">查询</button>
+        </form>
+        <div id="result"><p> 本站API接口免费使用，详情查阅 https://api.vv1234.cn/ip/</p></div>
+    </div>
+      
+</body>
+</html>
