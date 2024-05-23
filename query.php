@@ -1,6 +1,13 @@
 <?php
  // 2024-05-23  本接口由api.vv1234.cn/ip/ 提供，纯公益服务，请不要恶意攻击本接口,如遇接口故障，请联系 vv1234.cn 
 
+//以下内容请注意更换
+$from='ip.vv1234.cn';//来源域名，请如实您的站点地址!
+$test='test'; //默认token
+$code='json'; //默认响应类型 json
+
+
+//获取域名的解析记录  test $domain vv1234.cn
 function get_ip_address($domain) {
     // 尝试获取 AAAA 记录 (IPv6)
     $records = dns_get_record($domain, DNS_AAAA);
@@ -34,7 +41,7 @@ if (isset($_GET['input'])) {
     }
 
     // 构建 API 请求 URL
-    $api_url = "https://api.vv1234.cn/ip/api.php?ip_url=$ip&from=ip.vv1234.cn&token=test&code=json";
+    $api_url = "https://api.vv1234.cn/ip/api.php?ip_url=$ip&from=$from&token=$test&code=$code";
 
     // 使用 cURL 发送请求并获取响应
     $ch = curl_init();
@@ -50,13 +57,12 @@ if (isset($_GET['input'])) {
         exit;
     }
 
-// 清理 API 响应内容，去除控制字符
-$clean_response = preg_replace('/[\x00-\x1F]/', '', $response);
+    // 清理 API 响应内容，去除控制字符
+    $clean_response = preg_replace('/[\x00-\x1F]/', '', $response);
 
 
     // 解析 JSON 响应
   $data = json_decode($clean_response, true);
- // $data = json_decode($response, true);
 
 //var_dump($data);
      if (isset($data['ip'])) {
